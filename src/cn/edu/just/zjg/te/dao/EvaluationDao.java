@@ -145,7 +145,6 @@ public class EvaluationDao extends CommonDao {
             evaluation.setT10(rs.getInt(14));
             evaluation.setAdvice(rs.getString(15));
             evaluation.setTime(rs.getTimestamp(16));
-            System.out.println(rs.getMetaData().getColumnCount());
             if (rs.getMetaData().getColumnCount() > 16) {
                 Teacher teacher = new Teacher();
                 teacher.setId(rs.getInt(17));

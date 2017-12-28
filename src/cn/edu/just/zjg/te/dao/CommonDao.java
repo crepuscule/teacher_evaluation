@@ -15,7 +15,7 @@ class CommonDao {
     Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/te?useUnicode=true&characterEncoding=UTF-8", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/te?useUnicode=true&characterEncoding=UTF-8", "te", "12345678");
         } catch (SQLException e) {
             e.printStackTrace();
         }
