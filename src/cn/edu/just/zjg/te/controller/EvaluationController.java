@@ -28,8 +28,14 @@ public class EvaluationController {
 
     @RequestMapping(value = "evaluation", method = RequestMethod.POST)
     @ResponseBody
-    public HashMap<String, String> add(String ip, Integer teacher, String rating, String advice, HttpServletRequest request) {
+    public HashMap<String, String> add(Integer teacher, String rating, String advice, HttpServletRequest request) {
         HashMap<String, String> map = new HashMap<>();
+
+        if (!CommonUtil.canEvaluate(request)) {
+            map.put("code", "-1");
+            map.put("message", "测评已关闭");
+            return map;
+        }
 
         TeacherDao dao1 = new TeacherDao();
         Teacher teacherEntity = dao1.getById(teacher);
@@ -41,7 +47,7 @@ public class EvaluationController {
 
         String[] ratings = rating.split(",");
         if (ratings.length != 10) {
-            map.put("code", "-1");
+            map.put("code", "-2");
             map.put("message", "测评数据不完整");
             return map;
         }
@@ -51,14 +57,14 @@ public class EvaluationController {
         switch (teacherEntity.getType()) {
             case 1:
                 if (count > 1) {
-                    map.put("code", "-2");
-                    map.put("message", "共可测评1位班主任，当前已测评" + count + "位，无法继续测评");
+                    map.put("code", "-3");
+                    map.put("message", "共可测评1位班导师，当前已测评" + count + "位，无法继续测评");
                     return map;
                 }
                 break;
             case 2:
                 if (count > 3) {
-                    map.put("code", "-3");
+                    map.put("code", "-4");
                     map.put("message", "共可测评3位辅导员，当前已测评" + count + "位，无法继续测评");
                     return map;
                 }
@@ -88,7 +94,7 @@ public class EvaluationController {
             map.put("code", "1");
             map.put("message", "测评成功");
         } else {
-            map.put("code", "-4");
+            map.put("code", "-5");
             map.put("message", "测评失败");
         }
 

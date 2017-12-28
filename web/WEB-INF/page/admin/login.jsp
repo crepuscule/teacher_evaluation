@@ -53,13 +53,11 @@
             username: username.val(),
             password: password.val()
         }, function (response, status) {
-            if (status === 'success') {
-                if (parseInt(response.code) === 1) {
-                    alert('登录成功');
-                    window.location.href = '<%=request.getContextPath()%>/admin/evaluation';
-                } else {
-                    alert(response.message);
-                }
+            if (status === 'success' && parseInt(response.code) === 1) {
+                alert('登录成功');
+                window.location.href = '<%=request.getContextPath()%>/admin/evaluation';
+            } else {
+                alert(response.message);
             }
         }, 'json');
     })

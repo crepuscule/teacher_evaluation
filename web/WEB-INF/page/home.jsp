@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="zh-CN">
@@ -5,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>班主任辅导员考核测评系统</title>
+    <title>班导师辅导员考核测评系统</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/static/css/app.css">
@@ -48,7 +49,14 @@
         </div>
     </div>
     <div class="row" id="enter">
-        <a href="<%=request.getContextPath()%>/evaluation" class="btn btn-primary btn-lg">点击进入测评系统</a>
+        <c:if test="${enable}">
+            <a href="<%=request.getContextPath()%>/evaluation" class="btn btn-primary btn-lg">点击进入测评系统</a>
+        </c:if>
+        <c:if test="${!enable}">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-danger"><b>测评已关闭</b></div>
+            </div>
+        </c:if>
     </div>
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery.min.js"></script>

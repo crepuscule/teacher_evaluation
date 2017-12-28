@@ -3,10 +3,7 @@ package cn.edu.just.zjg.te.dao;
 import cn.edu.just.zjg.te.pojo.Evaluation;
 import cn.edu.just.zjg.te.pojo.Teacher;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class EvaluationDao extends CommonDao {
@@ -44,7 +41,26 @@ public class EvaluationDao extends CommonDao {
         try {
             Connection conn = getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM evaluation LEFT JOIN teacher ON evaluation.teacher_id = teacher.teacher_id ORDER BY time DESC LIMIT ?, 50");
-            ps.setInt(1, (page - 1) * 50);
+            ps.setInt(1, (page < 1 ? 1 : page - 1) * 50);
+            ResultSet rs = ps.executeQuery();
+            evaluations = new ArrayList<>();
+            while (rs.next()) {
+                evaluations.add(generate(rs));
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return evaluations;
+    }
+
+    public ArrayList<Evaluation> getByTeacherAndTime(Integer teacher, Timestamp timestamp) {
+        ArrayList<Evaluation> evaluations = null;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM evaluation WHERE teacher_id = ? AND time >= ?");
+            ps.setInt(1, teacher);
+            ps.setTimestamp(2, timestamp);
             ResultSet rs = ps.executeQuery();
             evaluations = new ArrayList<>();
             while (rs.next()) {
@@ -64,6 +80,24 @@ public class EvaluationDao extends CommonDao {
             PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM evaluation WHERE ip = ? AND teacher_type = ?");
             ps.setString(1, ip);
             ps.setInt(2, type);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public Integer countByTeacherAndTime(Integer teacher, Timestamp timestamp) {
+        Integer count = 0;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM evaluation WHERE teacher_id = ? AND time >= ?");
+            ps.setInt(1, teacher);
+            ps.setTimestamp(2, timestamp);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 count = rs.getInt(1);
@@ -111,13 +145,16 @@ public class EvaluationDao extends CommonDao {
             evaluation.setT10(rs.getInt(14));
             evaluation.setAdvice(rs.getString(15));
             evaluation.setTime(rs.getTimestamp(16));
-            Teacher teacher = new Teacher();
-            teacher.setId(rs.getInt(17));
-            teacher.setType(rs.getInt(18));
-            teacher.setFirst(rs.getString(19));
-            teacher.setSecond(rs.getString(20));
-            teacher.setName(rs.getString(21));
-            evaluation.setTeacher(teacher);
+            System.out.println(rs.getMetaData().getColumnCount());
+            if (rs.getMetaData().getColumnCount() > 16) {
+                Teacher teacher = new Teacher();
+                teacher.setId(rs.getInt(17));
+                teacher.setType(rs.getInt(18));
+                teacher.setFirst(rs.getString(19));
+                teacher.setSecond(rs.getString(20));
+                teacher.setName(rs.getString(21));
+                evaluation.setTeacher(teacher);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

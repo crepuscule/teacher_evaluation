@@ -67,7 +67,7 @@ public class TeacherDao extends CommonDao {
         try {
             Connection conn = getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher ORDER BY teacher_type ASC, teacher_id DESC LIMIT ?, 50");
-            ps.setInt(1, (page - 1) * 50);
+            ps.setInt(1, (page < 1 ? 1 : page - 1) * 50);
             ResultSet rs = ps.executeQuery();
             teachers = new ArrayList<>();
             while (rs.next()) {
@@ -80,12 +80,11 @@ public class TeacherDao extends CommonDao {
         return teachers;
     }
 
-    public ArrayList<Teacher> searchByName(String name) {
+    public ArrayList<Teacher> getAll() {
         ArrayList<Teacher> teachers = null;
         try {
             Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher WHERE name LIKE ?");
-            ps.setString(1, "%" + name + "%");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher ORDER BY teacher_type ASC, teacher_id DESC");
             ResultSet rs = ps.executeQuery();
             teachers = new ArrayList<>();
             while (rs.next()) {
@@ -96,6 +95,36 @@ public class TeacherDao extends CommonDao {
             e.printStackTrace();
         }
         return teachers;
+    }
+
+    public Integer countAll() {
+        Integer count = 0;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM teacher");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public Boolean delete(Integer id) {
+        Boolean flag = false;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM teacher WHERE teacher_id = ?");
+            ps.setInt(1, id);
+            flag = ps.executeUpdate() > 0;
+            close(conn, ps, null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     private Teacher generate(ResultSet rs) {
