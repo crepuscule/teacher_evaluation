@@ -15,7 +15,7 @@ class CommonDao {
     Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/te", "te", "12345678");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/te", "root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }

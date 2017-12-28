@@ -24,6 +24,7 @@ public class Evaluation {
     private Integer t10;
     private String advice;
     private Timestamp time;
+    private Teacher teacher;
 
     public Integer getId() {
         return id;
@@ -153,26 +154,12 @@ public class Evaluation {
         this.time = time;
     }
 
-    @Override
-    public String toString() {
-        return "Evaluation{" +
-            "id=" + id +
-            ", ip='" + ip + '\'' +
-            ", teacherId=" + teacherId +
-            ", teacherType=" + teacherType +
-            ", t1=" + t1 +
-            ", t2=" + t2 +
-            ", t3=" + t3 +
-            ", t4=" + t4 +
-            ", t5=" + t5 +
-            ", t6=" + t6 +
-            ", t7=" + t7 +
-            ", t8=" + t8 +
-            ", t9=" + t9 +
-            ", t10=" + t10 +
-            ", advice='" + advice + '\'' +
-            ", time=" + time +
-            '}';
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
 }

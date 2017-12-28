@@ -9,6 +9,20 @@ import java.sql.SQLException;
 
 public class AdminDao extends CommonDao {
 
+    public Boolean add(String username, String password) {
+        Boolean flag = false;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO admin (username, password) VALUES (?, ?)");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            flag = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
     public Admin getById(Integer id) {
         Admin admin = null;
         try {

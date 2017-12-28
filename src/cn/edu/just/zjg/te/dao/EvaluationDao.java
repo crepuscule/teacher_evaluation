@@ -1,11 +1,13 @@
 package cn.edu.just.zjg.te.dao;
 
 import cn.edu.just.zjg.te.pojo.Evaluation;
+import cn.edu.just.zjg.te.pojo.Teacher;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EvaluationDao extends CommonDao {
 
@@ -34,6 +36,24 @@ public class EvaluationDao extends CommonDao {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    public ArrayList<Evaluation> getList(Integer page) {
+        ArrayList<Evaluation> evaluations = null;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM evaluation LEFT JOIN teacher ON evaluation.teacher_id = teacher.teacher_id ORDER BY time DESC LIMIT ?, 50");
+            ps.setInt(1, (page - 1) * 50);
+            ResultSet rs = ps.executeQuery();
+            evaluations = new ArrayList<>();
+            while (rs.next()) {
+                evaluations.add(generate(rs));
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return evaluations;
     }
 
     public Integer countByIpAndType(String ip, Integer type) {
@@ -73,6 +93,13 @@ public class EvaluationDao extends CommonDao {
             evaluation.setT10(rs.getInt(14));
             evaluation.setAdvice(rs.getString(15));
             evaluation.setTime(rs.getTimestamp(16));
+            Teacher teacher = new Teacher();
+            teacher.setId(rs.getInt(17));
+            teacher.setType(rs.getInt(18));
+            teacher.setFirst(rs.getString(19));
+            teacher.setSecond(rs.getString(20));
+            teacher.setName(rs.getString(21));
+            evaluation.setTeacher(teacher);
         } catch (SQLException e) {
             e.printStackTrace();
         }

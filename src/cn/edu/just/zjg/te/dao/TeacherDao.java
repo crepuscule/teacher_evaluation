@@ -62,6 +62,24 @@ public class TeacherDao extends CommonDao {
         return teachers;
     }
 
+    public ArrayList<Teacher> getList(Integer page) {
+        ArrayList<Teacher> teachers = null;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher ORDER BY teacher_type ASC, teacher_id DESC LIMIT ?, 50");
+            ps.setInt(1, (page - 1) * 50);
+            ResultSet rs = ps.executeQuery();
+            teachers = new ArrayList<>();
+            while (rs.next()) {
+                teachers.add(generate(rs));
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return teachers;
+    }
+
     public ArrayList<Teacher> searchByName(String name) {
         ArrayList<Teacher> teachers = null;
         try {
