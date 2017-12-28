@@ -42,9 +42,9 @@
             </table>
             <div style="text-align: center;">
                 <ul class="pagination">
-                    <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage-1%>">上一页</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage-1%>">上一页</a></li>
                     <li class="active"><a>共 ${total} 位老师</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage+1%>">下一页</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage+1%>">下一页</a></li>
                 </ul>
             </div>
         </div>
