@@ -1,6 +1,5 @@
 package cn.edu.just.zjg.te.pojo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
