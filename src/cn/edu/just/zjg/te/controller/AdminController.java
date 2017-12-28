@@ -32,7 +32,7 @@ public class AdminController {
     public String showLogin(HttpServletRequest request) {
         Object id = request.getSession().getAttribute("id");
         if (id != null && Integer.parseInt(String.valueOf(id)) > 0) {
-            return "redirect: " + request.getContextPath() + "/admin/evaluation";
+            return "forward:/admin/evaluation";
         } else {
             return "admin/login";
         }
@@ -67,7 +67,7 @@ public class AdminController {
             map.put("total", dao.countAll());
             return "admin/evaluation";
         } else {
-            return "redirect: " + request.getContextPath() + "/admin";
+            return "forward:/admin";
         }
     }
 
@@ -171,7 +171,7 @@ public class AdminController {
             map.put("total", dao.countAll());
             return "admin/teacher";
         } else {
-            return "redirect: " + request.getContextPath() + "/admin";
+            return "forward:/admin";
         }
     }
 
@@ -219,7 +219,7 @@ public class AdminController {
             map.put("enable", CommonUtil.canEvaluate(request) ? "开启" : "关闭");
             return "admin/setting";
         } else {
-            return "redirect: " + request.getContextPath() + "/admin";
+            return "forward:/admin";
         }
     }
 
