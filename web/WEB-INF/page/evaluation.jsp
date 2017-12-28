@@ -17,7 +17,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" id="evaluation">
     <div class="row" id="logo">
         <img src="<%=request.getContextPath()%>/static/images/logo.png">
     </div>

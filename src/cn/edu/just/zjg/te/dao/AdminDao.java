@@ -17,6 +17,7 @@ public class AdminDao extends CommonDao {
             ps.setString(1, username);
             ps.setString(2, password);
             flag = ps.executeUpdate() > 0;
+            close(conn, ps, null);
         } catch (SQLException e) {
             e.printStackTrace();
         }

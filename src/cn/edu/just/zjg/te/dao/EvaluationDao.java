@@ -32,6 +32,7 @@ public class EvaluationDao extends CommonDao {
             ps.setString(14, evaluation.getAdvice());
             ps.setTimestamp(15, evaluation.getTime());
             flag = ps.executeUpdate() > 0;
+            close(conn, ps, null);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,6 +68,23 @@ public class EvaluationDao extends CommonDao {
             while (rs.next()) {
                 count = rs.getInt(1);
             }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public Integer countAll() {
+        Integer count = 0;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM evaluation");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+            }
+            close(conn, ps, rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }

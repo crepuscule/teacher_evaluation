@@ -3,8 +3,7 @@ package cn.edu.just.zjg.te.util;
 import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
@@ -39,6 +38,36 @@ public class CommonUtil {
             e.printStackTrace();
         }
         return newPassword;
+    }
+
+    public static Boolean canEvaluate(HttpServletRequest request) {
+        Boolean flag = false;
+        File file = new File(request.getServletContext().getRealPath("/WEB-INF/config/enable.txt"));
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            if (line != null && !line.equals("") && Integer.parseInt(line) == 1) {
+                flag = true;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static Boolean changeEvaluate(Boolean enable, HttpServletRequest request) {
+        File file = new File(request.getServletContext().getRealPath("/WEB-INF/config/enable.txt"));
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(enable ? "1" : "0");
+            writer.newLine();
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return canEvaluate(request);
     }
 
 }

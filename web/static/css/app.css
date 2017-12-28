@@ -52,7 +52,7 @@ body {
     margin: 0 auto;
 }
 
-.panel:last-child {
+#evaluation .panel:last-child {
     margin-bottom: 100px;
 }
 

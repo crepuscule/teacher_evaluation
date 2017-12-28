@@ -31,10 +31,8 @@ public class AdminController {
     @ResponseBody
     public HashMap<String, String> doLogin(String username, String password, HttpServletRequest request) {
         HashMap<String, String> map = new HashMap<>();
-
         AdminDao dao = new AdminDao();
         Admin admin = dao.getByUsername(username);
-
         if (username.length() > 5 && password.length() > 5 &&
             admin != null && admin.getPassword().equals(CommonUtil.encodePassword(password))) {
             request.getSession().setAttribute("id", admin.getId());
@@ -43,7 +41,6 @@ public class AdminController {
             map.put("message", "登录成功");
             return map;
         }
-
         map.put("code", "0");
         map.put("message", "账号或密码错误");
         return map;
@@ -75,4 +72,28 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "admin/setting", method = RequestMethod.GET)
+    public String showSetting(ModelMap map, HttpServletRequest request) {
+        Object id = request.getSession().getAttribute("id");
+        if (id != null && Integer.parseInt(String.valueOf(id)) > 0) {
+            map.put("enable", CommonUtil.canEvaluate(request) ? "开启" : "关闭");
+            return "admin/setting";
+        } else {
+            return "redirect: " + request.getContextPath() + "/admin";
+        }
+    }
+
+    @RequestMapping(value = "admin/setting", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String, String> doLogin(Boolean enable, HttpServletRequest request) {
+        HashMap<String, String> map = new HashMap<>();
+        if (CommonUtil.changeEvaluate(enable, request) == enable) {
+            map.put("code", "1");
+            map.put("message", "成功");
+        } else {
+            map.put("code", "0");
+            map.put("message", "失败");
+        }
+        return map;
+    }
 }

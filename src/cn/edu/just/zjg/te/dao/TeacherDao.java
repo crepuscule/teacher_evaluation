@@ -48,7 +48,7 @@ public class TeacherDao extends CommonDao {
         ArrayList<Teacher> teachers = null;
         try {
             Connection conn = getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher WHERE teacher_type = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM teacher WHERE teacher_type = ? ORDER BY teacher_type ASC, teacher_id DESC, name ASC");
             ps.setInt(1, type);
             ResultSet rs = ps.executeQuery();
             teachers = new ArrayList<>();
