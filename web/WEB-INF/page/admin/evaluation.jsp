@@ -50,13 +50,13 @@
                 </thead>
                 <tbody><c:forEach items="${evaluations}" var="evaluation" varStatus="key"><tr><th>${key.count}</th><td>${evaluation.getTeacher().getName()}</td><td><c:if test="${evaluation.getTeacher().getType() == 1}">班导师</c:if><c:if test="${evaluation.getTeacher().getType() == 2}">辅导员</c:if></td><td>${evaluation.getT1()}</td><td>${evaluation.getT2()}</td><td>${evaluation.getT3()}</td><td>${evaluation.getT4()}</td><td>${evaluation.getT5()}</td><td>${evaluation.getT6()}</td><td>${evaluation.getT7()}</td><td>${evaluation.getT8()}</td><td>${evaluation.getT9()}</td><td>${evaluation.getT10()}</td><td><fmt:formatDate value="${evaluation.getTime()}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td></tr></c:forEach></tbody>
             </table>
-            <div style="text-align: center;">
-                <ul class="pagination">
-                    <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage-1%>">上一页</a></li>
-                    <li class="active"><a>共 ${total} 条测评数据</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage+1%>">下一页</a></li>
-                </ul>
-            </div>
+        </div>
+        <div style="text-align: center;">
+            <ul class="pagination">
+                <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage-1%>">上一页</a></li>
+                <li class="active"><a>共 ${total} 条测评数据</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/evaluation?page=<%=thisPage+1%>">下一页</a></li>
+            </ul>
         </div>
     </div>
 </div>

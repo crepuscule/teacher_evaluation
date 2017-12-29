@@ -40,13 +40,13 @@
                 </thead>
                 <tbody><c:forEach items="${teachers}" var="teacher" varStatus="key"><tr><th>${key.count}</th><td><c:if test="${teacher.getType() == 1}">班导师</c:if><c:if test="${teacher.getType() == 2}">辅导员</c:if></td><td>${teacher.getFirst()}</td><td>${teacher.getSecond()}</td><td>${teacher.getName()}</td><td><button class="btn btn-danger btn-xs delete" value="${teacher.getId()}">删除</button></td></tr></c:forEach></tbody>
             </table>
-            <div style="text-align: center;">
-                <ul class="pagination">
-                    <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage-1%>">上一页</a></li>
-                    <li class="active"><a>共 ${total} 位老师</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage+1%>">下一页</a></li>
-                </ul>
-            </div>
+        </div>
+        <div style="text-align: center;">
+            <ul class="pagination">
+                <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage-1%>">上一页</a></li>
+                <li class="active"><a>共 ${total} 位老师</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/teacher?page=<%=thisPage+1%>">下一页</a></li>
+            </ul>
         </div>
     </div>
 </div>
