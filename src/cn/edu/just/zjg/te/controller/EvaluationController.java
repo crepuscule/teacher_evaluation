@@ -56,14 +56,14 @@ public class EvaluationController {
         Integer count = dao2.countByIpAndType(CommonUtil.getIp(request), teacherEntity.getType());
         switch (teacherEntity.getType()) {
             case 1:
-                if (count > 1) {
+                if (count >= 1) {
                     map.put("code", "-3");
                     map.put("message", "共可测评1位班导师，当前已测评" + count + "位，无法继续测评");
                     return map;
                 }
                 break;
             case 2:
-                if (count > 3) {
+                if (count >= 3) {
                     map.put("code", "-4");
                     map.put("message", "共可测评3位辅导员，当前已测评" + count + "位，无法继续测评");
                     return map;
