@@ -58,7 +58,7 @@ public class Evaluation {
     }
 
     public Integer getT1() {
-        return t1 * 2;
+        return t1;
     }
 
     public void setT1(Integer t1) {
@@ -66,7 +66,7 @@ public class Evaluation {
     }
 
     public Integer getT2() {
-        return t2 * 2;
+        return t2;
     }
 
     public void setT2(Integer t2) {
@@ -74,7 +74,7 @@ public class Evaluation {
     }
 
     public Integer getT3() {
-        return t3 * 2;
+        return t3;
     }
 
     public void setT3(Integer t3) {
@@ -82,7 +82,7 @@ public class Evaluation {
     }
 
     public Integer getT4() {
-        return t4 * 2;
+        return t4;
     }
 
     public void setT4(Integer t4) {
@@ -90,7 +90,7 @@ public class Evaluation {
     }
 
     public Integer getT5() {
-        return t5 * 2;
+        return t5;
     }
 
     public void setT5(Integer t5) {
@@ -98,7 +98,7 @@ public class Evaluation {
     }
 
     public Integer getT6() {
-        return t6 * 2;
+        return t6;
     }
 
     public void setT6(Integer t6) {
@@ -106,7 +106,7 @@ public class Evaluation {
     }
 
     public Integer getT7() {
-        return t7 * 2;
+        return t7;
     }
 
     public void setT7(Integer t7) {
@@ -114,7 +114,7 @@ public class Evaluation {
     }
 
     public Integer getT8() {
-        return t8 * 2;
+        return t8;
     }
 
     public void setT8(Integer t8) {
@@ -122,7 +122,7 @@ public class Evaluation {
     }
 
     public Integer getT9() {
-        return t9 * 2;
+        return t9;
     }
 
     public void setT9(Integer t9) {
@@ -130,7 +130,7 @@ public class Evaluation {
     }
 
     public Integer getT10() {
-        return t10 * 2;
+        return t10;
     }
 
     public void setT10(Integer t10) {
