@@ -1,6 +1,6 @@
 # Jetbrains
 /.idea/
-/te.iml
+/*.iml
 
 # Output
 /out/
