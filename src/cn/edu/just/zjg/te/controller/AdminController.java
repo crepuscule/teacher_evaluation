@@ -7,6 +7,7 @@ import cn.edu.just.zjg.te.pojo.Admin;
 import cn.edu.just.zjg.te.pojo.Evaluation;
 import cn.edu.just.zjg.te.pojo.Teacher;
 import cn.edu.just.zjg.te.util.CommonUtil;
+import cn.edu.just.zjg.te.util.RedisUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -42,16 +44,25 @@ public class AdminController {
     @ResponseBody
     public HashMap<String, String> doLogin(String username, String password, HttpServletRequest request) {
         HashMap<String, String> map = new HashMap<>();
+        Jedis jedis = RedisUtil.getJedis();
+        String ip = CommonUtil.getIp(request);
+        jedis.set(ip, "0", "NX", "EX", 600);
+        if (Integer.parseInt(jedis.get(ip)) >= 3) {
+            map.put("code", "-1");
+            map.put("message", "登录失败次数过多，请10分钟之后再试");
+            return map;
+        }
         AdminDao dao = new AdminDao();
         Admin admin = dao.getByUsername(username);
-        if (username.length() > 5 && password.length() > 5 &&
-            admin != null && admin.getPassword().equals(CommonUtil.encodePassword(password))) {
+        if (username.length() > 5 && password.length() > 5 && admin != null &&
+            admin.getPassword().equals(CommonUtil.encodePassword(password))) {
             request.getSession().setAttribute("id", admin.getId());
             request.getSession().setAttribute("username", admin.getUsername());
             map.put("code", "1");
             map.put("message", "登录成功");
             return map;
         }
+        jedis.incr(ip);
         map.put("code", "0");
         map.put("message", "账号或密码错误");
         return map;
