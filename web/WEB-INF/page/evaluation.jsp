@@ -18,8 +18,18 @@
         <img src="<%=request.getContextPath()%>/static/images/logo.png">
     </div>
     <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="alert alert-info" role="alert">
+                各位同学：<br>
+                为更好地推进和完善校区及苏理工学生工作，激励专业班导师更加积极做好学生管理服务，现开展此项班导师、辅导员测评。<br>
+                测评截止时间：<b>2018年1月11日12：00</b>。<br>
+                测评范围：班导师<b>1</b> 人，辅导员 <b>1-3</b> 人。
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <ul class="nav nav-tabs" style="text-align: center;">
+            <ul class="nav nav-tabs" style="width: 248px;margin: 0 auto;font-size: 18px;">
                 <li><a href="#headmaster" data-toggle="tab">班导师测评</a></li>
                 <li><a href="#instructor" data-toggle="tab">辅导员测评</a></li>
             </ul>
