@@ -125,6 +125,24 @@ public class EvaluationDao extends CommonDao {
         return count;
     }
 
+    public Double averageOfScoreByTeacherAndTime(Integer teacher, Timestamp timestamp) {
+        Double score = 0.0;
+        try {
+            Connection conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT AVG(t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10) FROM evaluation WHERE teacher_id = ? AND time >= ?");
+            ps.setInt(1, teacher);
+            ps.setTimestamp(2, timestamp);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                score = rs.getDouble(1);
+            }
+            close(conn, ps, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return score;
+    }
+
     private Evaluation generate(ResultSet rs) {
         Evaluation evaluation = null;
         try {

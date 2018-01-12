@@ -107,6 +107,7 @@ public class AdminController {
         row0.createCell(2).setCellValue("二级分类");
         row0.createCell(3).setCellValue("姓名");
         row0.createCell(4).setCellValue("测评总数");
+        row0.createCell(5).setCellValue("测评均分");
         HSSFRow row1 = sheet1.createRow(0);
         row1.createCell(0).setCellValue("班导师 辅导员");
         row1.createCell(1).setCellValue("一级分类");
@@ -133,6 +134,7 @@ public class AdminController {
             row0.createCell(2).setCellValue(teacher.getSecond());
             row0.createCell(3).setCellValue(teacher.getName());
             row0.createCell(4).setCellValue(dao2.countByTeacherAndTime(teacher.getId(), timestamp));
+            row0.createCell(5).setCellValue(dao2.averageOfScoreByTeacherAndTime(teacher.getId(), timestamp));
             ArrayList<Evaluation> evaluations = dao2.getByTeacherAndTime(teacher.getId(), timestamp);
             for (Evaluation evaluation : evaluations) {
                 row1 = sheet1.createRow(rowNumber1);
